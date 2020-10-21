@@ -1,0 +1,93 @@
+<html>
+  <head>
+    <title>Scope</title>
+  </head>
+
+  <body>
+    <a href="/ejercicios/">Go back</a>
+    <p><em>Abre la consola</em></p>
+
+    <script src="https://unpkg.com/jquery@3.3.1/dist/jquery.js"></script>
+
+    <script>
+      //////////////////// Closures///////////////////
+      /* let color = 'green';
+
+      function printColor() {
+        console.log(color);
+      }
+      printColor(); */
+      //lee el color, pero no esta bien porque definimos color como global, para evitar usamos IIFE:
+
+      /////////////////// IIFE///////////////////
+      //IIFE: Immediately invoked function expression
+      /* (function () {
+        //aqui creamos una funcion que se llama automaticamente.
+        let color = 'green';
+
+        function printColor() {
+          console.log(color);
+        }
+        printColor();
+      })(); */
+      //Ahora color ya no cruza al scope global, ahora es scope de funcion. Cuando tenemos la declaración let color y está funcion en ejecucion console.log (color) sabemos que let color esta afuera, pero aun asi el codigo lo lee porque esta en una scope de funcion que engloba a la otra funcion de scope que printColor que usa la variable color, a estó le llaman Closures. Es la combinación del scope de una función y el scope donde fue definida, donde el scope de la función es la función IIFE la función principal, y adentro la función que fue definida dentro de ese scope tiene acceso a las variables que estan afuera.
+
+      // Funciones que regresan funciones
+
+      /*  function makeColorPrinter(color) {
+        let colorMessage = `The color is ${color}`;
+        return function () {
+          console.log(colorMessage);
+        };
+      }
+      let greenColorPrinter = makeColorPrinter('green');
+      console.log(greenColorPrinter());*/
+
+      //ponemos en este caso los () parentesis, porque makeColorPrinter nos REGRESA UNA FUNCION, NO UNA VARIABLE, entonces greenColorPrinter en teoría se convierte en una funcion tambien, ASI QUE se pone () y bueno el resultado es resultado console.log(colorMessage) que es The color is green y seria el valor que aquiere nuestra variable let greenColorPrinter .!!
+
+      //Lo genial es que mira, greenColorPrinter es igual al function(){...} del  return, pero esta memorizando todo del scope de makeColorPrinter, eso es lo genial de clousures porque memorizan scopes anteriores. Clousures nos va a permitir una funcionalidad que el lenguajo no trae, variables privadas.
+
+      // variables "privadas"
+
+      /* const counter = {
+        count: 3,
+      };
+      console.log(counter.count); YO NO QUIERO QUE tengan acceso a ver counter.count, por ello creamos esto:*/
+
+      function makeCounter(n) {
+        let count = n;
+
+        return {
+          increase: function () {
+            count = count + 1;
+          },
+          decrease: function () {
+            count = count - 1;
+          },
+          getCount: function () {
+            return count;
+          },
+        };
+      }
+      let counter = makeCounter(7);
+      console.log(`The count is: ${counter.getCount()}`);
+      console.log(`The count is: ${counter.increase()}`);
+      console.log(`The count is: ${counter.decrease()}`); // COMO VEMOS  nos sale undefined, porque ahora count es una variable "privada", y esto es porque no tenemos acceso al scope que se encuentra esa variable. El anterior caso es una IIFE, pero este no es una funcion que realiza return, entonces la variable let count, su scope es para la funcion makecounter, nada mas. Si tu quieres modificarla o verla directamente en el caso  con el console log, no puedes. Pero bueno si podemos modificarla, pero de esta manera
+
+      counter.increase();
+      counter.increase();
+      counter.increase();
+      counter.increase();
+      counter.increase();
+      console.log(`The count is: ${counter.getCount()}`);
+      counter.decrease();
+      counter.decrease();
+      counter.decrease();
+      console.log(`The count is: ${counter.getCount()}`);
+
+      //Ahora poner esto no se puede por lo ya explicado:
+      counter.count = 0;
+      console.log(`The count is: ${counter.getCount()}`); //seguira siendo el utlimo valor en que se aquedo
+    </script>
+  </body>
+</html>

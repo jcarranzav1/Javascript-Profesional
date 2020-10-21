@@ -1,0 +1,71 @@
+<html>
+  <head>
+    <title>
+      Function.prototype.call, Function.prototype.apply, Function.prototype.bind
+    </title>
+  </head>
+
+  <body>
+    <a href="/ejercicios/">Go back</a>
+    <p><em>Abre la consola</em></p>
+
+    <ul>
+      <li><button class="call-to-action">Aprender</button></li>
+      <li><button class="call-to-action">Aprender Más</button></li>
+      <li><button class="call-to-action">¡Nunca parar de Aprender!</button></li>
+    </ul>
+
+    <script>
+      //Establecer this usando call
+      function saludar() {
+        console.log(`Hola soy ${this.name} ${this.apellido}`);
+      }
+      const juan = {
+        name: 'Juan',
+        apellido: 'Carranza',
+      };
+      saludar.call(juan);
+      //Establecer this unsando call y agregando argumentos a la funcion
+      function caminar(metros, direccion) {
+        console.log(
+          `${this.name} camina ${metros} metros hacia el ${direccion}`
+        );
+      }
+
+      caminar.call(juan, 1000, 'Norte');
+
+      //Establecer this usando apply y agregando argumentos a la funcion
+      const valores = [800, 'Sur'];
+      caminar.apply(juan, valores);
+
+      /*
+        Call - comas (aqui agregamos argumento por argumento separado por comas)
+        Apply - arrays (aqui todos los argumentos deben estar en un array)
+      */
+
+      //Establece this en una nueva funcion usando bind
+      //bind construye una nueva funcion, esta nueva funcion tiene el this ya integrado y a nosotros nos tocar guardar esa funcion
+      const diego = {
+        name: 'Diego',
+        apellido: 'Vega',
+      };
+      const diegoSaluda = saludar.bind(diego);
+      diegoSaluda();
+
+      const diegoCaminar = caminar.bind(diego, 1000);
+      diegoCaminar('Este');
+      //Podemos guardar parcialmente unos argumentos y despues otros. A esta tecnica se le llaman curyng, donde guardamos paracialmente unos argumentos y luego gurdamos los demás. ESTA es una tecnica funcional muy poderosa, que nos permitira hacer funciones reutilizable para contextos donde solo parcialmente esta establecido un valor.
+      //Cuando es util usar uno de estos metodos
+      const buttons = document.getElementsByClassName('call-to-action');
+      /* buttons.forEach(button => {
+        button.onclick = () => alert('Nunca pares de aprender!');
+      }); */
+      //CUANDO USAMOS EL document.getElementByClassName, es necesario saber que es un NODELIST no un array, por ello el for each no sirve, nos sale error!!!
+
+      //NodeList
+      Array.prototype.forEach.call(buttons, button => {
+        button.onclick = () => alert('Nunca pares de aprender!');
+      });
+    </script>
+  </body>
+</html>

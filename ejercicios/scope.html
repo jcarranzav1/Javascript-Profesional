@@ -1,0 +1,62 @@
+<html>
+  <head>
+    <title>Scope</title>
+  </head>
+
+  <body>
+    <a href="/ejercicios/">Go back</a>
+    <p><em>Abre la consola</em></p>
+
+    <script src="https://unpkg.com/jquery@3.3.1/dist/jquery.js"></script>
+
+    <script>
+      /////////////////////////// Global Scope////////////////////////////////
+
+      /*  var message = 'Hello Platzi';
+       var $ = function (message) {
+         //Porque no sale la variable message de arriba, pues a esto se le llama scope de funciones, y esa variable message es un parametro de la funcion, en cambio la variable de arriba var message es una variable globa (SCOPE GLOBAL). El parametro de la funcion es una representacion  que te dice, oye aquí pon lo que quieras para imprimirlo. Esa variable message es como una referencia que te dice que se necesita poner un parametro y que en este caso es un mensaje.
+         console.log(`Say: ${message}`);
+       }; */
+
+      ////////////////////////// Function Scope////////////////////////
+
+      /*
+      function printNumbers() {
+        for (var i = 0; i < 10; i++) {
+          setTimeout(() => console.log(i), 100);
+        }
+      }
+      Primero es que el for(var i=0 ..), es como definir al inicio var i; eso ya lo vimos en una clase de scope, que las variables JS siempre las lleva al inicio y las ejectua.
+
+      Y tambien como ya sabemos esto generará que el mande a la pila de tareas el setTimeout y se ejecute al final de acabar el for, y como al final de todo i=10, entonces imprimirá 10, 10 veces.Es como que le dice mira quiero que cuando acabe el for tu imprimas un console.log(i) y asi se llena 10 veces, como i=10 al final, pues GG.Esto es porque VAR es un scope global osea va a tomar en cuenta el valor global de i(que es 10), no de su CAMBIO en el bloque del for; TENERLO EN CUENTA.
+      Lo podemos solucionar así: 
+
+      */
+      /*
+      //ESTE ES EL CODIGO DE FUNCTION SCOPEEE, NO OLVIDAR!
+      function printNumbers() {
+        for (var i = 0; i < 10; i++) {
+          function eventuallyPrint(n) {
+            setTimeout(() => console.log(n), 100);
+          }
+          eventuallyPrint(i);
+        }
+      }
+      printNumbers();
+    */
+      //En este caso si se logra hacer la imprecio de 0-10, PORQUE durante el for estamos ejecutando una FUNCION que tiene como parametro el i. En este caso cuando se ejecute setTimeout, manda la pila de tareas, ya no console.log(n) si no que si enviara console.log(1 ó 2 ..), porque n es parte de un scope de funcion. Como el cambio de n se produce en la funcion entonces si puede leerlo de forma correcta el setTimeOut, EN EL ATERIOR CASO NO PORQUE I ESTA DEFINIDA DE FORMA GLOBAL Y SOLO LEERA CAMBIOS QUE SE PRODUZCAN EN EL GLOBAL NO EN LA FUNCION, PORQUE ES QUE IGNORA Y SIEMPRE MANDA 10, en este caso como la variable a leer "n" lo limitamos a que tenga un alcanze unicamente en la funcion, y como los cambios se producen en la funcion, ya lo puede leer.. Chido no?, PUES recuerdalo muy bien porque nos salvará de muchas cosas, asi que a tenerlo muy en cuenta.
+
+      /////////////////////////////////// Block Scope/////////////////////////////////////////
+      //Ahora el como dijimos JS al var lo pone como scope global, pero que hay de let?, pues este entra a una seccion de block scope. Y el codigo anterior podemos simplifacarlo asi, que en vez de usar var, usemos let.
+
+      function printNumbers2() {
+        for (let i = 0; i < 10; i++) {
+          setTimeout(() => console.log(i), 100);
+        }
+      }
+      printNumbers2();
+      //let opera en block scope, osea en este caso let solo tiene un alcanze en for, y como el cambio de variable se produce en el for, entonces si puede leer nuestra variable el setTimeout. USA SIEMPRE LET.
+      // Module Scope
+    </script>
+  </body>
+</html>

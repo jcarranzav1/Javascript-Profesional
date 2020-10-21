@@ -1,0 +1,124 @@
+<html>
+  <head>
+    <title>Prototype</title>
+  </head>
+
+  <body>
+    <a href="/ejercicios/">Go back</a>
+    <p><em>Abre la consola</em></p>
+
+    <script>
+      //Un objeto comun y corriente
+      /*  const zelda = {
+          name: 'Zelda',
+        };
+
+        zelda.saludar = function () {
+          console.log(`Hola soy ${this.name}`);
+        };
+
+        zelda.saludar();
+
+        const link = {
+          name: 'link',
+        };
+
+        link.saludar = function () {
+          console.log(`Hola soy ${this.name}`);
+        };
+
+        link.saludar(); */
+
+      //SEAMOS MAS EFICIENTES
+
+      /*  function Hero(name) {
+        const hero = {
+          name: name,
+        };
+        hero.saludar = function () {
+          console.log(`Hola soy ${this.name}`);
+        };
+        console.log(hero);
+        return hero; 
+        //el return hero, vuelve objeto a la variable designada con toda su informacion, en este caso el saludar y el name, por ejemplo:
+        // const zelda = Hero('Zelda'), ahora zelda (la variable) se convirtio en un objeto, teniendo toda la informacion de hero.
+      }
+      const zelda = Hero('Zelda');
+      zelda.saludar(); //Estamos construyendo el metodo saludar
+      const link = Hero('Link');
+      link.saludar(); */
+
+      //Aun podemos mejorarlo más y evitar  tener que crear la misma funcion cada vez
+
+      /* const heroMethods = {
+         saludar: function () {
+           console.log(`Hola soy ${this.name}`);
+         },
+       };
+
+       function Hero(name) {
+         const hero = {
+           name: name,
+         };
+         hero.saludar = heroMethods.saludar;
+         return hero;
+       }
+       const zelda = Hero('Zelda');
+       zelda.saludar();
+       const link = Hero('Link');
+       link.saludar(); */
+
+      //Object.create
+      //const nuevoObjeto = Object.create(objeto)
+      //Object.create  no genera "un objeto vacio", pero que esta compuesta por una herencia prototipal, es decir dentro de esta herencia esta toda la informacion del objeto puesto en el argumento. Todo lo que estuvo en heroMethods paso a este proto del objeto hero, creado por object.create.
+
+      /*  const heroMethods = {
+         saludar: function () {
+           console.log(`Soy superheroe ${this.name}`);
+         },
+       };
+
+       function Hero(name) {
+         const hero = Object.create(heroMethods);
+         hero.name = name;
+         return hero;
+       }
+       const zelda = Hero('Zelda');
+       zelda.saludar();
+       const link = Hero('Link');
+       link.saludar(); */
+
+      //Los métodos de hero(heroMethods) dentro de Hero
+
+      /*  function Hero(name) {
+        const hero = Object.create(Hero.prototype);
+        hero.name = name;
+        return hero;
+      }
+      Hero.prototype.saludar = function () {
+        console.log(`Soy superheroína ${this.name}`);
+      };
+      const zelda = Hero('Zelda');
+      zelda.saludar();
+      const link = Hero('Link');
+      link.saludar();
+ */
+      //New es un atajo, para llevar Hero.prototype al objeto
+      // Ya no tendremos que usar Object.create ni retornar la función Hero para que nuestro mensaje aparezca en consola. Al usar New automáticamente nuestra función Hero usa el prototype como this, ya no tendremos que llamar a Hero.prototype con Object.create para contar con la función saludar. Las partes que no necesitaremos las comentaré.
+
+      function Hero(name) {
+        //const hero = Object.create(Hero.prototype);
+        this.name = name;
+        //return hero;
+      }
+      Hero.prototype.saludar = function () {
+        console.log(`New ${this.name}`);
+      };
+
+      const zelda = new Hero('Zelda');
+      zelda.saludar();
+      const link = new Hero('Link');
+      link.saludar();
+    </script>
+  </body>
+</html>

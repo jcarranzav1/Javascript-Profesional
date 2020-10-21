@@ -1,0 +1,61 @@
+<html>
+  <head>
+    <title>Herencia Prototipal</title>
+  </head>
+
+  <body>
+    <a href="/ejercicios/">Go back</a>
+    <p><em>Abre la consola</em></p>
+
+    <h1>
+      <code>SomeObject.prototype</code> es un objeto donde definimos el
+      prototipo de las instancias de <code>SomeObject</code>. Es decir, las
+      instancias de <code>SomeObject</code> van a "heredar" de
+      <code>SomeObject.prototype</code>.
+      <br />
+      <br />
+      <code>SomeObject.[[Prototype]]</code> es el prototipo de
+      <code>SomeObject</code>. Es decir, <code>SomeObject</code> "hereda" de
+      <code>SomeObject.prototype</code>.
+    </h1>
+
+    <script>
+      function Hero(name) {
+        this.name = name;
+      }
+      Hero.prototype.saludar = function () {
+        console.log(`New ${this.name}`);
+      };
+
+      const zelda = new Hero('Zelda');
+      //Propiedades de la instancia
+      console.log('Name:', zelda.name);
+      //Propiedades de la "clase"
+      console.log('Saludar:', zelda.saludar);
+      //Propiedades heredadas ej: toString
+      console.log('toString:', zelda.toString);
+      //hasOwnProperty (de donde sale toString o esto?)
+      console.log(
+        'zelda.hasOwnProperty("name"):',
+        zelda.hasOwnProperty('name')
+      );
+      console.log(
+        'zelda.hasOwnProperty("saludar"):',
+        zelda.hasOwnProperty('saludar')
+      ); //como puedes ver, name si es propiedad de zelda, pero saludar no lo es. Y esto es porque saludar no pertenece a zelda, si no a su prototipo. Y es zelda quien esta heredando todoo la informacion del prototipo. No olvidar, se heredan LOS PROTOTIPOS
+
+      const prototypeOfZelda = Object.getPrototypeOf(zelda);
+      console.log(
+        `prototypeOfZelda === Hero.prototype: ${
+          prototypeOfZelda === Hero.prototype
+        }`
+      );
+
+      console.log(
+        `prototypeOfZelda === Hero.prototype: ${
+          prototypeOfZelda === Hero.prototype
+        }`
+      );
+    </script>
+  </body>
+</html>
